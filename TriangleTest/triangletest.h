@@ -8,7 +8,8 @@
 class TriangleTest
 {
 public:
-	TriangleTest(std::string fileName = "");
+	TriangleTest(std::string fileName);
+	TriangleTest();
 	int getSide(std::istream& input);
 };
 
