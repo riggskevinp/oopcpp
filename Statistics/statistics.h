@@ -10,9 +10,9 @@ public:
 
 	void add(double x); // add an item to the statistis
 
-	void removeItem(int index);// remove an item
-
 	double getItem(int index) const; // get the value of an individual item
+
+	void setItem(int index, double x); // set the value
 
 	double getAverage() const; // get average
 	// calculate average
@@ -25,9 +25,6 @@ public:
 private:
 	// private member data
 	int itemCount;
-	double average;
-	double runningTotal;
-	double STD;
 	std::vector<double> items;
 
 };

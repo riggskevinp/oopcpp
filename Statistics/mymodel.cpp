@@ -56,6 +56,23 @@ MyModel::MyModel(QObject *parent)
 }
 
 
+QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if(role == Qt::DisplayRole && orientation == Qt::Vertical)
+		{
+			if(section == 0) {
+				return QString("Average");
+			} else if(section == 1){
+				return QString("STD Dev");
+			} else {
+				return QString("%1").arg(section - 1);
+			}
+		}
+	return QVariant();
+}
+
+
+
 int MyModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return m_items.getItemCount() + ROWS;
@@ -89,7 +106,7 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
         if (!checkIndex(index))
             return false;
         //save value from editor to member m_gridData
-        m_items.add(value.toDouble());
+        m_items.setItem(index.row() - 2, value.toDouble());
         return true;
     }
     return false;
@@ -98,6 +115,24 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 Qt::ItemFlags MyModel::flags(const QModelIndex &index) const
 {
     // add case for STD and Average, make not editable
-	return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+	if(index.row() == 0 || index.row() == 1){
+		return QAbstractTableModel::flags(index);
+	} else{
+		return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+	}
+}
+
+bool MyModel::insertRows(int position, int rows, const QModelIndex &index)
+{
+	Q_UNUSED(index);
+		beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
+		m_items.add(0.0);
+		endInsertRows();
+		return true;
+}
+
+void MyModel::appendRow()
+{
+	this->insertRows(this->rowCount()-1,1);
 }
 

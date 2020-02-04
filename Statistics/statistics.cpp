@@ -1,10 +1,8 @@
 #include "statistics.h"
+#include <math.h>
 
 Statistics::Statistics() :
-	itemCount{0},
-	runningTotal{0.0},
-	average{0.0},
-	STD{0.0}
+	itemCount{0}
 {
 
 }
@@ -13,11 +11,6 @@ void Statistics::add(double x)
 {
 	this->items.push_back(x);
 	this->itemCount++;
-}
-
-void Statistics::removeItem(int index)
-{
-
 }
 
 double Statistics::getItem(int index) const
@@ -35,14 +28,33 @@ double Statistics::getItem(int index) const
 
 }
 
+void Statistics::setItem(int index, double x)
+{
+	items[index] = x;
+}
+
 double Statistics::getAverage() const
 {
-	return this->average;
+	double total = 0;
+	for(double x : items){
+		total += x;
+	}
+	return items.empty() ? 0 : total / items.size();
 }
 
 double Statistics::getSTD() const
 {
-	return this->STD;
+	if(items.empty()){
+		return 0.0;
+	} else {
+		double x2 = 0;
+		double average = getAverage();
+		for(double x : items){
+			x2 += x*x;
+		}
+		double s2 = (x2 - items.size() * pow(average, 2)) / (items.size() - 1);
+		return sqrt(s2);
+	}
 }
 
 int Statistics::getItemCount() const

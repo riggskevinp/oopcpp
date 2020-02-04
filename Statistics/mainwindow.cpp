@@ -52,6 +52,8 @@
 #include "mymodel.h"
 
 #include <QTableView>
+#include <QMenu>
+#include <QMenuBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -64,6 +66,15 @@ MainWindow::MainWindow(QWidget *parent)
     //transfer changes to the model to the window title
     connect(myModel, &MyModel::editCompleted,
             this, &MainWindow::showWindowTitle);
+
+	QAction * addItem = new QAction(tr("Add"), this);
+	connect(addItem, &QAction::triggered, myModel, &MyModel::appendRow);
+	// get menu in view
+	QMenu *fileMenu;
+	fileMenu = menuBar()->addMenu(tr("&Edit"));
+	fileMenu->addAction(addItem);
+
+
 }
 
 void MainWindow::showWindowTitle(const QString &title)
