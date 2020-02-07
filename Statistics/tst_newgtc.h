@@ -6,6 +6,8 @@
 
 #include "statistics.h"
 
+#include <iostream>
+
 using namespace testing;
 
 TEST(newgt, newgtc)

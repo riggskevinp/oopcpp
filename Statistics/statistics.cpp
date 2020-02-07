@@ -7,6 +7,15 @@ Statistics::Statistics() :
 {
 
 }
+
+//Constructor that takes an input stream to fill out its items
+Statistics::Statistics(std::istream &input)
+{
+	double newItem = 0;
+	while(input >> newItem){
+		items.push_back(newItem);
+	}
+}
 // Adds a double to the existing doubles
 void Statistics::add(double x)
 {
