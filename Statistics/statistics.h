@@ -19,9 +19,6 @@ public:
 	//Constructor: initialize private data
 	Statistics(); 
 
-	//Constructor: when given a stream
-	Statistics(std::istream& input);
-
 	// add an item to the statistis
 	void add(double x); 
 

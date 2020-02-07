@@ -67,6 +67,7 @@ class MyModel : public QAbstractTableModel
     Q_OBJECT
 public:
     MyModel(QObject *parent = nullptr);
+	MyModel(QObject *parent, Statistics stats);
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

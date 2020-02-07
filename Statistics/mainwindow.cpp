@@ -57,12 +57,42 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include <QFileDialog>
+#include <QTextStream>
+#include <QMessageBox>
+
+#include "statistics.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , tableView(new QTableView(this))
 {
 
-    MyModel *myModel = new MyModel(this);
+	MyModel* myModel;
+	QString fileName = QFileDialog::getOpenFileName(this);
+
+	if(!fileName.isEmpty()){
+		QFile file(fileName);
+		if(!file.open(QIODevice::ReadOnly)){
+			myModel = new MyModel(this);
+			QMessageBox::information(this, tr("Unable to open file"),
+							file.errorString());
+		} else {
+			Statistics statData;
+
+			QTextStream in(&file);
+			QString line = in.readLine();
+			while (!line.isNull()) {
+				statData.add(line.toDouble());
+				line = in.readLine();
+			}
+			myModel = new MyModel(this, statData); // better to pass by reference
+		}
+
+	} else {
+		myModel = new MyModel(this);
+	}
+
     tableView->setModel(myModel);
 
     //transfer changes to the model to the window title

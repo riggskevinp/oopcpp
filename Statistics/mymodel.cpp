@@ -55,6 +55,13 @@ MyModel::MyModel(QObject *parent)
 {
 }
 
+MyModel::MyModel(QObject *parent, Statistics stats)
+	: QAbstractTableModel(parent),
+	  m_items(stats)
+{
+
+}
+
 
 QVariant MyModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
