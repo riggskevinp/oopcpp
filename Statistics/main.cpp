@@ -51,9 +51,14 @@
 #include <QApplication>
 #include "mainwindow.h"
 
+#include "tst_newgtc.h"
+#include <gtest/gtest.h>
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    ::testing::InitGoogleTest(&argc, argv);
+	RUN_ALL_TESTS();
+	QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();

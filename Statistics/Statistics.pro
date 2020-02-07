@@ -1,9 +1,13 @@
 TARGET = statistics
 
+include(gtest_dependency.pri)
+
 TEMPLATE = app
 
 QT += widgets
-CONFIG += c++11
+CONFIG += c++11 #console
+CONFIG -= app_bundle
+CONFIG += thread
 DEFINES += QT_DEPRECATED_WARNINGS
 
 requires(qtConfig(tableview))
@@ -15,7 +19,8 @@ SOURCES += main.cpp \
 
 HEADERS += mainwindow.h \
            mymodel.h \
-           statistics.h
+           statistics.h \
+		   tst_newgtc.h
 
 # install
 # Default rules for deployment.

@@ -3,28 +3,42 @@
 
 #include <vector>
 
+/*
+* Statistics Class
+* 	Class accepts a double as an input
+* 	Stores that double and will return
+* 	the average and standard deviation
+* 	of the doubles.
+*/
+
 class Statistics
 {
 public:
-	Statistics(); //Constructor: initialize private data
+	//Constructor: initialize private data
+	Statistics(); 
 
-	void add(double x); // add an item to the statistis
+	// add an item to the statistis
+	void add(double x); 
 
-	double getItem(int index) const; // get the value of an individual item
+	// get the value of an individual item
+	double getItem(int index) const; 
 
-	void setItem(int index, double x); // set the value
+	// set the value
+	void setItem(int index, double x); 
 
-	double getAverage() const; // get average
-	// calculate average
+	// get average
+	double getAverage() const; 
 
-	double getSTD() const; // get Standard deviation: using the hint
-	// calculate average
+	// get Standard deviation: using the hint
+	double getSTD() const; 
 
-	int getItemCount() const; // get number of items
+	// get number of items
+	int getItemCount() const; 
 
 private:
-	// private member data
+	// count containing the number of items
 	int itemCount;
+	// holds all entered items
 	std::vector<double> items;
 
 };

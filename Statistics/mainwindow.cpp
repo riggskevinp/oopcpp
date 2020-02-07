@@ -54,12 +54,14 @@
 #include <QTableView>
 #include <QMenu>
 #include <QMenuBar>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , tableView(new QTableView(this))
 {
-    setCentralWidget(tableView);
+
     MyModel *myModel = new MyModel(this);
     tableView->setModel(myModel);
 
@@ -73,6 +75,16 @@ MainWindow::MainWindow(QWidget *parent)
 	QMenu *fileMenu;
 	fileMenu = menuBar()->addMenu(tr("&Edit"));
 	fileMenu->addAction(addItem);
+
+	QPushButton* addButton = new QPushButton(tr("Add Item"), this);
+	connect(addButton, &QPushButton::clicked, myModel, &MyModel::appendRow);
+
+	QVBoxLayout* vLayout = new QVBoxLayout;
+	vLayout->addWidget(addButton);
+	vLayout->addWidget(tableView);
+	QWidget* statTable = new QWidget;
+	statTable->setLayout(vLayout);
+	setCentralWidget(statTable);
 
 
 }
