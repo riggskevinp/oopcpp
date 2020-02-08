@@ -69,29 +69,35 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
 	MyModel* myModel;
-	QString fileName = QFileDialog::getOpenFileName(this);
+	myModel = new MyModel();
 
-	if(!fileName.isEmpty()){
-		QFile file(fileName);
-		if(!file.open(QIODevice::ReadOnly)){
+	auto fileContentReady = [&myModel, this](const QString &fileName, const QByteArray &fileContent) {
+		if (fileName.isEmpty()) {
+			// No file was selected
 			myModel = new MyModel(this);
-			QMessageBox::information(this, tr("Unable to open file"),
-							file.errorString());
+
 		} else {
-			Statistics statData;
+			// Use fileName and fileContent
+			QFile file(fileName);
+			if(!file.open(QIODevice::ReadOnly)){
+				myModel = new MyModel(this);
+				QMessageBox::information(this, tr("Unable to open file"),
+								file.errorString());
+			} else {
+				Statistics statData;
 
-			QTextStream in(&file);
-			QString line = in.readLine();
-			while (!line.isNull()) {
-				statData.add(line.toDouble());
-				line = in.readLine();
+				QTextStream in(&file);
+				QString line = in.readLine();
+				while (!line.isNull()) {
+					statData.add(line.toDouble());
+					line = in.readLine();
+				}
+				myModel = new MyModel(this, statData); // better to pass by reference
+				tableView->setModel(myModel);
 			}
-			myModel = new MyModel(this, statData); // better to pass by reference
 		}
-
-	} else {
-		myModel = new MyModel(this);
-	}
+	};
+	QFileDialog::getOpenFileContent("Data file",  fileContentReady);
 
     tableView->setModel(myModel);
 
