@@ -60,6 +60,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QDataStream>
 
 #include "statistics.h"
 
@@ -71,13 +72,24 @@ MainWindow::MainWindow(QWidget *parent)
 	MyModel* myModel;
 	myModel = new MyModel();
 
-	auto fileContentReady = [&myModel, this](const QString &fileName, const QByteArray &fileContent) {
+    auto fileContentReady = [&myModel, this](const QString &fileName, const QByteArray &fileContent) {
 		if (fileName.isEmpty()) {
 			// No file was selected
 			myModel = new MyModel(this);
 
 		} else {
 			// Use fileName and fileContent
+            Statistics statData;
+            QList<QByteArray> list = fileContent.split('\n');
+
+            for(QString n : list){
+                //std::cout << n.toStdString() << std::endl;
+                statData.add(n.toDouble());
+            }
+
+            myModel = new MyModel(this, statData); // better to pass by reference
+            tableView->setModel(myModel);
+            /*
 			QFile file(fileName);
 			if(!file.open(QIODevice::ReadOnly)){
 				myModel = new MyModel(this);
@@ -95,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 				myModel = new MyModel(this, statData); // better to pass by reference
 				tableView->setModel(myModel);
 			}
+            */
 		}
 	};
 	QFileDialog::getOpenFileContent("Data file",  fileContentReady);
@@ -107,10 +120,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 	QAction * addItem = new QAction(tr("Add"), this);
 	connect(addItem, &QAction::triggered, myModel, &MyModel::appendRow);
+
+    QAction* openFile = new QAction(tr("Open File"), this);
+    connect(openFile, &QAction::triggered,
+            [=](){QFileDialog::getOpenFileContent("Data file", fileContentReady);});
+
 	// get menu in view
 	QMenu *fileMenu;
 	fileMenu = menuBar()->addMenu(tr("&Edit"));
 	fileMenu->addAction(addItem);
+    fileMenu->addAction(openFile);
 
 	QPushButton* addButton = new QPushButton(tr("Add Item"), this);
 	connect(addButton, &QPushButton::clicked, myModel, &MyModel::appendRow);
