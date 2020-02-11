@@ -86,6 +86,7 @@ private:
 
     QString myState;
     int turnNumber = 0;
+	int winnerPosition = -1;
 };
 //! [0]
 

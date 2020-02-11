@@ -52,12 +52,15 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QMessageBox>
 
 static inline QString defaultState() { return QStringLiteral("---------"); }
 
 TicTacToe::TicTacToe(QWidget *parent)
     : QWidget(parent)
 {
+	turnNumber = 9;
+	myState = defaultState();
 }
 
 QSize TicTacToe::minimumSizeHint() const
@@ -101,6 +104,11 @@ void TicTacToe::clearBoard()
 void TicTacToe::mousePressEvent(QMouseEvent *event)
 {
     if (turnNumber == 9) {
+		if(winnerPosition >= 0){
+			QMessageBox::warning(this->parentWidget(), tr("Game Over"), tr("%1 wins").arg(myState.at(winnerPosition)), QMessageBox::Ok | QMessageBox::Close);
+		} else{
+			QMessageBox::warning(this->parentWidget(), tr("Game Over"), tr("Result: tie"), QMessageBox::Ok | QMessageBox::Close);
+		}
         clearBoard();
         update();
     } else {
@@ -108,6 +116,7 @@ void TicTacToe::mousePressEvent(QMouseEvent *event)
             QRect cell = cellRect(position / 3, position % 3);
             if (cell.contains(event->pos())) {
                 if (myState.at(position) == Empty) {
+					// modify to just be cross when computer plays Nought
                     if (turnNumber % 2 == 0)
                         myState.replace(position, 1, Cross);
                     else
@@ -116,6 +125,14 @@ void TicTacToe::mousePressEvent(QMouseEvent *event)
                     update();
                 }
             }
+        }
+		for (int position = 0; position < 9; ++position) {
+			if(myState.at(position) == Empty){
+				myState.replace(position, 1, Nought);
+				++turnNumber;
+				update();
+				break;
+			}
         }
     }
 }
@@ -147,33 +164,37 @@ void TicTacToe::paintEvent(QPaintEvent * /* event */)
     painter.setPen(QPen(Qt::yellow, 3));
 
     for (int position = 0; position < 9; position = position + 3) {
-        if (myState.at(position) != Empty
+        if ((myState.at(position) == Cross || myState.at(position) == Nought)
                 && myState.at(position + 1) == myState.at(position)
                 && myState.at(position + 2) == myState.at(position)) {
             int y = cellRect((position / 3), 0).center().y();
             painter.drawLine(0, y, width(), y);
             turnNumber = 9;
+			winnerPosition = position;
         }
     }
 
     for (int position = 0; position < 3; ++position) {
-        if (myState.at(position) != Empty
+        if ((myState.at(position) == Cross || myState.at(position) == Nought)
                 && myState.at(position + 3) == myState.at(position)
                 && myState.at(position + 6) == myState.at(position)) {
             int x = cellRect(0, position).center().x();
             painter.drawLine(x, 0, x, height());
             turnNumber = 9;
+			winnerPosition = position;
         }
     }
-    if (myState.at(0) != Empty && myState.at(4) == myState.at(0)
+    if ((myState.at(0) == Cross || myState.at(0) == Nought) && myState.at(4) == myState.at(0)
             && myState.at(8) == myState.at(0)) {
         painter.drawLine(0, 0, width(), height());
         turnNumber = 9;
+		winnerPosition = 0;
     }
-    if (myState.at(2) != Empty && myState.at(4) == myState.at(2)
+    if ((myState.at(2) == Cross || myState.at(2) == Nought) && myState.at(4) == myState.at(2)
             && myState.at(6) == myState.at(2)) {
         painter.drawLine(0, height(), width(), 0);
         turnNumber = 9;
+		winnerPosition = 2;
     }
 }
 
