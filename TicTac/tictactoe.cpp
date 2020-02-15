@@ -59,7 +59,7 @@ static inline QString defaultState() { return QStringLiteral("---------"); }
 TicTacToe::TicTacToe(QWidget *parent)
     : QWidget(parent)
 {
-	turnNumber = 9;
+    turnNumber = 0;
 	myState = defaultState();
 }
 
@@ -105,12 +105,16 @@ void TicTacToe::mousePressEvent(QMouseEvent *event)
 {
     if (turnNumber == 9) {
 		if(winnerPosition >= 0){
-			QMessageBox::warning(this->parentWidget(), tr("Game Over"), tr("%1 wins").arg(myState.at(winnerPosition)), QMessageBox::Ok | QMessageBox::Close);
+            QString winner = myState.at(winnerPosition);
+            clearBoard();
+            update();
+            QMessageBox::information(this->parentWidget(), tr("Game Over"), tr("%1 wins").arg(winner), QMessageBox::Ok | QMessageBox::Close);
 		} else{
-			QMessageBox::warning(this->parentWidget(), tr("Game Over"), tr("Result: tie"), QMessageBox::Ok | QMessageBox::Close);
+            clearBoard();
+            update();
+            QMessageBox::information(this->parentWidget(), tr("Game Over"), tr("Result: tie"), QMessageBox::Ok | QMessageBox::Close);
 		}
-        clearBoard();
-        update();
+
     } else {
         for (int position = 0; position < 9; ++position) {
             QRect cell = cellRect(position / 3, position % 3);
