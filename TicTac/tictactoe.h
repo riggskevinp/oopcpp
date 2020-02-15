@@ -59,31 +59,45 @@ class QSize;
 QT_END_NAMESPACE
 
 //! [0]
+// Holds the state and visualisation
+// for a tictactoe game
 class TicTacToe : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QString state READ state WRITE setState)
 
 public:
+	// Constructor for the object
     explicit TicTacToe(QWidget *parent = nullptr);
-
+	// Used for painting,
+	// window will want to know what to set
+	// the size to.
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
+	// update the state of the game
     void setState(const QString &newState);
+	// return the state of the game
     QString state() const;
+	// reset the game
     void clearBoard();
 
 protected:
+	// handle when a click is received on the widget
     void mousePressEvent(QMouseEvent *event) override;
+	// how to paint the board
     void paintEvent(QPaintEvent *event) override;
 
 private:
+	// char used to denote the state of the game
     enum : char { Empty = '-', Cross = 'X', Nought = 'O' };
 
+	// Used to calculate how big to make visuals on the
+	// board.
     QRect cellRect(int row, int col) const;
     int cellWidth() const { return width() / 3; }
     int cellHeight() const { return height() / 3; }
 
+	// data that holds the state of the game.
     QString myState;
     int turnNumber = 0;
 	int winnerPosition = -1;

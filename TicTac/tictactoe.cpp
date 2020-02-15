@@ -54,8 +54,10 @@
 #include <QPainter>
 #include <QMessageBox>
 
+// When the game has just started, no Xs or Os
 static inline QString defaultState() { return QStringLiteral("---------"); }
 
+// Constructor, parent widget will give responsibility to the main window.
 TicTacToe::TicTacToe(QWidget *parent)
     : QWidget(parent)
 {
@@ -63,16 +65,19 @@ TicTacToe::TicTacToe(QWidget *parent)
 	myState = defaultState();
 }
 
+// size hints for initial size
 QSize TicTacToe::minimumSizeHint() const
 {
     return QSize(200, 200);
 }
 
+// size hints for initial size
 QSize TicTacToe::sizeHint() const
 {
 	return QSize(200, 200);
 }
 
+// Given a new state, update the current state accordingly
 void TicTacToe::setState(const QString &newState)
 {
     turnNumber = 0;
@@ -89,11 +94,13 @@ void TicTacToe::setState(const QString &newState)
     update();
 }
 
+// Return the current state
 QString TicTacToe::state() const
 {
     return myState;
 }
 
+// Reset the game
 void TicTacToe::clearBoard()
 {
     myState = defaultState();
@@ -101,6 +108,9 @@ void TicTacToe::clearBoard()
     update();
 }
 
+// Handle mouse clicks
+// Logic includes checking for a winner in order to display a message
+// Displaying a QMessageBox doesn't work as intended targeting WASM
 void TicTacToe::mousePressEvent(QMouseEvent *event)
 {
     if (turnNumber == 9) {
@@ -141,6 +151,9 @@ void TicTacToe::mousePressEvent(QMouseEvent *event)
     }
 }
 
+// Logic for painting the board
+// Notice there is too much responsibility in this class
+// It currently decides who won.
 void TicTacToe::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
@@ -202,6 +215,7 @@ void TicTacToe::paintEvent(QPaintEvent * /* event */)
     }
 }
 
+// Figure out how big the boxes are.
 QRect TicTacToe::cellRect(int row, int column) const
 {
     const int HMargin = width() / 30;
