@@ -1,0 +1,136 @@
+// Intial design notes
+
+Card
+	face
+	suit
+
+hand
+	vector cards
+	int cardCount
+	double value
+
+	
+	sort(cards)
+	compare(hand)
+		suitCount [0,0,0,0]
+		faceCount int array of size 13
+		double cardValue = 0;
+		
+		for(card : cards){
+			suitCount[card.suit]++
+			faceCount[card.face]++
+		}
+		isFlush = false;
+			for(suit: suitCount){
+				if(suit > 4) {
+					isFlush = true;
+				}
+			}
+		isStraight = false;
+			for(int i = 0; i <= 8; i++)
+				if(faceCount[i] > 0 && faceCount[i+1] > 0 && faceCount[i+2] > 0 && faceCount[i+3] > 0 && faceCount[i+4] > 0){
+					isStraight = true;
+				}
+		isStraightFlush = false;
+			if(isFlush && isStraight){
+				isStraightFlush = true;
+				return 10 + card[0]*1e-2; // highest integer value plus the highest card value
+			}
+		
+		fourOfKind = -1;
+		singleCard = -1;
+			for(face, index : faceCount){
+				if(face == 4){
+					fourOfKind = index;
+				}
+				if(face == 1){
+					singleCard = index;
+				}
+			}
+			if(fourOfKind >= 0){
+				return 9 + fourOfKind*1e-2 + singleCard*.0001;
+			}
+		threeOfKind = -1;
+			for(face, index : faceCount){
+				if(face == 3){
+					threeOfKind = index;
+				}
+			}
+		pair1 = -1;
+		pair2 = -1;
+			for(face, index : faceCount){
+				if(face == 2){
+					if(pair1 == -1){
+						pair1 = index;
+					}
+					pair2 = index;
+				}
+			}
+		isFullHouse
+			if(threeOfKind >= 0 && pair1 >= 0){
+				isFullHouse = True;
+				return 8 + threeOfKind*.01 + pair1*.0001;
+
+			}
+		checkFlush
+			if(isFlush){
+				return 7 + card[0]*.01 + card[1]*.0001 + card[2]*.000001 + card[3]*.00000001 + card[4]*.0000000001;
+			}
+			
+		checkStraight
+			if(isStraight){
+				return 6 + card[0]*.01;
+			}
+		
+		isThreeOfKind = false;
+			if(threeOfKind >= 0){
+				isThreeOfKind = true;
+				vector<int> leftOver;
+				for(face, index : faceCount){
+					if(face > 3){
+						leftOver.append(index);
+				}
+				return 5 + threeOfKind*.01 + leftOver.last()*.0001 + leftOver.first()*.000001;
+			}
+		isTwoPair = false;
+			if(pair1 >= 0 && pair2 >= 0){
+				isTwoPair = true;
+				int leftOver = 0;
+				for(face, index : faceCount){
+					if(face > 2){
+						leftOver = index;
+				}
+				return 4 + pair2*.01 + pair1*.0001 + leftover*.000001;
+			}
+		isOnePair = false;
+			if(pair1 >= 0){
+				isOnePair = true;
+				vector<int> leftOver;
+				for(face, index : faceCount){
+					if(face > 2){
+						leftOver.append(index);
+				}
+				return 3 + pair1*.01 + leftover[2]*.0001 + leftOver[1]*.000001 + leftOver[0]*.00000001;
+			}
+		isHighCard = true;
+			return 2 + cards[0]*1e-2 + cards[1]*1e-4 + cards[2]*1e-6 + cards[3]*1e-8 + cards[4]*1e-10 + cards[5]*1e-12
+
+
+
+flush,straight,highcard: Rank + value(highcard)*.01
+four of a kind,highfoak, highcard: Rank + value(4kind)*.01 + value(highcard)*.0001
+fullhouse,highthree,hightwo: Rank + value(highthree)*.01 + value(hightwo)*.0001
+flush,highcard: Rank + value(highcard)*.01 + value(highcard)*.01 +
+straight,highcard: Rank + value(highcard)*.01
+threeofakind,highthree,highcard: Rank + value(high3)*.01 + value(highcard)*.0001
+twopair,highfirstpair,highsecondpair,highcard: Rank + value(highfirstpair)*.01 + value(highsecondpair)*.0001 + value(highcard)*.000001
+onepair,highpair,highcard
+highcard: Rank value(highcard1)*.01 + value(highcard2)*.0001 + value(highcard3)*.000001 ...
+
+
+
+
+
+// not necessary for project requirements
+deck
+	array size 52 (map face/suit to number out of 52)
