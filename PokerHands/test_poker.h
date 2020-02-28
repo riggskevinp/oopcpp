@@ -11,6 +11,8 @@
 #ifdef _WIN32
 #define LIBCONFIG_STATIC
 #include <../../libconfig/lib/libconfig.h++>
+#else
+#include <libconfig.h++>
 #endif
 
 #include <iostream>
