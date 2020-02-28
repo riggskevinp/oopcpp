@@ -20,6 +20,10 @@ hand
 			suitCount[card.suit]++
 			faceCount[card.face]++
 		}
+		
+		
+		
+		
 		isFlush = false;
 			for(suit: suitCount){
 				if(suit > 4) {

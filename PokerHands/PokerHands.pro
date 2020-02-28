@@ -17,12 +17,14 @@ SOURCES += \
     card.cpp \
     main.cpp \
     mainwindow.cpp \
-    pokerhand.cpp
+    pokerhand.cpp \
+    readConfig.cpp
 
 HEADERS += \
     card.h \
     mainwindow.h \
     pokerhand.h \
+    readConfig.h \
 	test_poker.h
 
 FORMS += \

@@ -6,19 +6,19 @@ Card::Card(char suit, char face)
 {
 	switch(suit) {
 	case('H'):{
-		this->suit = 'H';
+		this->suit = 0;
 		break;
 	}
 	case('S'):{
-		this->suit = 'S';
+		this->suit = 1;
 		break;
 	}
 	case('D'):{
-		this->suit = 'D';
+		this->suit = 2;
 		break;
 	}
 	case('C'):{
-		this->suit = 'C';
+		this->suit = 3;
 		break;
 	}
 	default:

@@ -6,10 +6,10 @@ class Card
 public:
 	Card(char suit, char face);
 	int getFace(){return this->face;}
-	char getSuit(){return this->suit;}
+	int getSuit(){return this->suit;}
 
 private:
-	char suit;
+	int suit;
 	int face;
 };
 
