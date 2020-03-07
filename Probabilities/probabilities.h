@@ -8,9 +8,9 @@ public:
     Probabilities(double dub);
     Probabilities();
     double operator &(Probabilities const &obj);
-    double operator |(Probabilities &obj);
-    double operator ^(Probabilities &obj);
-    double operator -(Probabilities &obj);
+    double operator |(Probabilities const &obj);
+    double operator ^(Probabilities const &obj);
+    double operator -(Probabilities const &obj);
     double operator ~();
     void operator =(double const &dub);
     void operator =(Probabilities const &obj);

@@ -48,4 +48,41 @@ TEST(probabilities, andOperator){
     EXPECT_EQ(0.25,p&p);
 }
 
+TEST(probabilities, orOperator){
+
+    Probabilities p = Probabilities(0.5);
+    Probabilities t = Probabilities(0.5);
+
+    EXPECT_EQ(0.75, p|t);
+    EXPECT_EQ(0.75, p|p);
+
+}
+
+TEST(probabilities, xorOperator){
+
+    Probabilities p = Probabilities(0.5);
+    Probabilities t = Probabilities(0.5);
+
+    EXPECT_EQ(0.5, p^t);
+    EXPECT_EQ(0.5, p^p);
+
+}
+
+TEST(probabilities, notAOperator){
+
+    Probabilities p = Probabilities(0.75);
+    Probabilities t = Probabilities(0.75);
+
+    EXPECT_EQ(0.1875, p-t);
+    EXPECT_EQ(0.1875, p-p);
+
+}
+
+TEST(probabilities, notOperator){
+
+    Probabilities p = Probabilities(0.25);
+    EXPECT_EQ(0.75, ~p);
+
+}
+
 #endif // TST_NEWGTC_H

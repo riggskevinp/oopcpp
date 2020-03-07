@@ -21,6 +21,28 @@ double Probabilities::operator &(Probabilities const &obj)
     return this->getProbability() * obj.getProbability();
 }
 
+double Probabilities::operator |(Probabilities const &obj)
+{
+    return this->getProbability() + obj.getProbability() - (this->operator&(obj));
+}
+
+double Probabilities::operator ^(Probabilities const &obj)
+{
+    return (this->operator|(obj)) - (this->operator&(obj));
+}
+
+double Probabilities::operator -(Probabilities const &obj)
+{
+
+    Probabilities t = Probabilities(1 - obj.getProbability());  // I don't like this at all
+    return this->operator&(t);
+}
+
+double Probabilities::operator ~()
+{
+    return 1 - this->getProbability();
+}
+
 void Probabilities::operator =(const double &dub)
 {
     if(dub < 0 || dub > 1){
