@@ -1,9 +1,9 @@
-QT       += core gui widgets
+QT += core gui widgets charts
 
 include(gtest_dependency.pri)
 
 
-QT += widgets
+
 CONFIG += c++11 #console
 CONFIG -= app_bundle
 CONFIG += thread

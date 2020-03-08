@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtCharts/QPieSeries>
+#include "probabilities.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,8 +16,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void updateProbabilities();
 
 private:
     Ui::MainWindow *ui;
+    Probabilities A;
+    Probabilities B;
+    QtCharts::QPieSeries *series3;
+    QtCharts::QChart *chart3;
 };
 #endif // MAINWINDOW_H
