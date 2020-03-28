@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <stdio.h>
-
+#include <memory>
 
 
 class TreeNode
@@ -17,7 +17,7 @@ public:
 	static std::map<std::string, double> lookUpTable;
 
 protected:
-	TreeNode* leftChild = nullptr;
+	std::shared_ptr<TreeNode> leftChild = nullptr;
 	TreeNode* rightChild = nullptr;
 };
 
@@ -43,6 +43,7 @@ class Add: public TreeNode
 {
 public:
 	Add(TreeNode* left, TreeNode* right);
+	~Add(){delete rightChild;}
 	double evaluate(){return leftChild->evaluate() + rightChild->evaluate();}
 };
 
@@ -50,6 +51,7 @@ class Subtract: public TreeNode
 {
 public:
 	Subtract(TreeNode* left, TreeNode* right);
+	~Subtract(){delete rightChild;}
 	double evaluate(){return leftChild->evaluate() - rightChild->evaluate();}
 };
 
@@ -57,6 +59,7 @@ class Multiply: public TreeNode
 {
 public:
 	Multiply(TreeNode* left, TreeNode* right);
+	~Multiply(){delete rightChild;}
 	double evaluate(){return leftChild->evaluate() * rightChild->evaluate();}
 };
 
@@ -64,6 +67,7 @@ class Divide: public TreeNode
 {
 public:
 	Divide(TreeNode* left, TreeNode* right);
+	~Divide(){delete rightChild;}
 	double evaluate();
 };
 

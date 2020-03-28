@@ -3,9 +3,9 @@
 
 std::map<std::string, double> TreeNode::lookUpTable = {};
 
-Add::Add(TreeNode *left, TreeNode *right)
+Add::Add(TreeNode* left, TreeNode* right)
 {
-	leftChild = left;
+	leftChild.reset(left);
 	rightChild = right;
 }
 
@@ -23,13 +23,13 @@ double Variable::evaluate()
 
 Divide::Divide(TreeNode *left, TreeNode *right)
 {
-	leftChild = left;
+	leftChild.reset(left);
 	rightChild = right;
 }
 
 double Divide::evaluate()
 {
-	if(rightChild->evaluate() == 0){
+	if(0.0 == rightChild->evaluate()){
 		std::cerr << "Tried to divide by zero" << std::endl;
 		return 1;
 	} else{
@@ -47,12 +47,12 @@ double Divide::evaluate()
 
 Multiply::Multiply(TreeNode *left, TreeNode *right)
 {
-	leftChild = left;
+	leftChild.reset(left);
 	rightChild = right;
 }
 
 Subtract::Subtract(TreeNode *left, TreeNode *right)
 {
-	leftChild = left;
+	leftChild.reset(left);
 	rightChild = right;
 }

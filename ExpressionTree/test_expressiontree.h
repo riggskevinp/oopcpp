@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <memory>
 
 #include "expressiontreenode.h"
 
@@ -18,7 +19,7 @@ TEST(newgt, newgtc)
 }
 
 TEST(expressionTree, constantChecks){
-	Constant* c = new Constant(3.3);
+	std::shared_ptr<Constant> c(new Constant(3.3));
 	EXPECT_EQ(3.3, c->evaluate());
 }
 
@@ -29,7 +30,7 @@ TEST(expressionTree, variableChecks){
 }
 
 TEST(expressionTree, addChecks){
-	Add* a = new Add(new Constant(3.3), new Constant(3.3));
+	std::shared_ptr<Add> a(new Add(new Constant(3.3), new Constant(3.3)));
 	EXPECT_EQ(6.6, a->evaluate());
 	TreeNode::lookUpTable.insert_or_assign("X", 2.2);
 	Add* b = new Add(new Variable("X"), new Variable("X"));
