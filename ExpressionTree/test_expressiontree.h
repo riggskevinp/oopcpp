@@ -73,4 +73,17 @@ TEST(expressionTree, multipleLevles){
 	EXPECT_EQ(13.6, a->evaluate());
 }
 
+TEST(expressionTree, print){
+	Add* a = new Add(
+				new Multiply(new Constant(2.3), new Variable("Xray")),
+				new Multiply(new Variable("Yellow"),
+						new Subtract(new Variable("Zebra"), new Variable("Xray"))));
+	testing::internal::CaptureStdout();
+	std::cout << *a << std::endl;
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "(((2.3)*(Xray))+((Yellow)*((Zebra)-(Xray))))\n");
+}
+
+
+
 #endif // TST_EXPRESSIONTREE_H

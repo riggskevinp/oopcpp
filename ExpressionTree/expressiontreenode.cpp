@@ -9,6 +9,11 @@ Add::Add(TreeNode* left, TreeNode* right)
 	rightChild = right;
 }
 
+void Add::print(std::ostream &os) const
+{
+	os << "(" << *this->leftChild << "+" << *this->rightChild << ")";
+}
+
 Variable::Variable(std::string str):
 	variableName(str)
 {
@@ -19,6 +24,11 @@ double Variable::evaluate()
 {
 	auto res = lookUpTable.find(variableName);
 	return res->second;
+}
+
+void Variable::print(std::ostream &os) const
+{
+	os << "(" << this->variableName << ")";
 }
 
 Divide::Divide(TreeNode *left, TreeNode *right)
@@ -45,14 +55,63 @@ double Divide::evaluate()
 	*/
 }
 
+void Divide::print(std::ostream &os) const
+{
+	os << "(" << *this->leftChild << "/" << *this->rightChild << ")";
+}
+
 Multiply::Multiply(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
 	rightChild = right;
 }
 
+void Multiply::print(std::ostream &os) const
+{
+	os << "(" << *this->leftChild << "*" << *this->rightChild << ")";
+}
+
 Subtract::Subtract(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
 	rightChild = right;
+}
+
+void Subtract::print(std::ostream &os) const
+{
+	os << "(" << *this->leftChild << "-" << *this->rightChild << ")";
+}
+
+void Constant::print(std::ostream &os) const
+{
+	os << "(" << this->value << ")";
+}
+
+std::ostream& operator<<(std::ostream &out, const TreeNode& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Add& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Subtract& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Multiply& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Divide& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Constant& tn) {
+	tn.print(out);
+	return out;
+}
+std::ostream& operator<<(std::ostream &out, const Variable& tn) {
+	tn.print(out);
+	return out;
 }
