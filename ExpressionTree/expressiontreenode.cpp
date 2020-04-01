@@ -64,6 +64,12 @@ double Divide::evaluate()
 	*/
 }
 
+Divide *Divide::derivative(std::string var)
+{
+	return new Divide(new Subtract(new Multiply(rightChild.get(),leftChild->derivative(var)), new Multiply(leftChild.get(),rightChild->derivative(var))),
+					  new Multiply(rightChild.get(),rightChild.get()));
+}
+
 void Divide::print(std::ostream &os) const
 {
 	os << "(" << *this->leftChild << "/" << *this->rightChild << ")";
@@ -73,6 +79,13 @@ Multiply::Multiply(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
 	rightChild.reset(right);
+}
+
+Add *Multiply::derivative(std::string var)
+{
+	return new Add(
+				new Multiply(leftChild.get(),rightChild->derivative(var)),
+				new Multiply(rightChild.get(), leftChild->derivative(var)));
 }
 
 void Multiply::print(std::ostream &os) const

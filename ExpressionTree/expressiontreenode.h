@@ -73,7 +73,7 @@ class Multiply: public TreeNode
 public:
 	Multiply(TreeNode* left, TreeNode* right);
 	double evaluate() override {return leftChild->evaluate() * rightChild->evaluate();}
-	Multiply* derivative(std::string var)override{return nullptr;}
+	Add* derivative(std::string var)override;
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Multiply& tn);
 };
@@ -83,7 +83,7 @@ class Divide: public TreeNode
 public:
 	Divide(TreeNode* left, TreeNode* right);
 	double evaluate() override;
-	Divide* derivative(std::string var)override{return nullptr;}
+	Divide* derivative(std::string var)override;
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Divide& tn);
 };
