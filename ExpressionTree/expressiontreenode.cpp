@@ -6,7 +6,7 @@ std::map<std::string, double> TreeNode::lookUpTable = {};
 Add::Add(TreeNode* left, TreeNode* right)
 {
 	leftChild.reset(left);
-	rightChild = right;
+	rightChild.reset(right);
 }
 
 void Add::print(std::ostream &os) const
@@ -43,7 +43,7 @@ void Variable::print(std::ostream &os) const
 Divide::Divide(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
-	rightChild = right;
+	rightChild.reset(right);
 }
 
 double Divide::evaluate()
@@ -72,7 +72,7 @@ void Divide::print(std::ostream &os) const
 Multiply::Multiply(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
-	rightChild = right;
+	rightChild.reset(right);
 }
 
 void Multiply::print(std::ostream &os) const
@@ -83,7 +83,7 @@ void Multiply::print(std::ostream &os) const
 Subtract::Subtract(TreeNode *left, TreeNode *right)
 {
 	leftChild.reset(left);
-	rightChild = right;
+	rightChild.reset(right);
 }
 
 void Subtract::print(std::ostream &os) const

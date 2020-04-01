@@ -21,7 +21,7 @@ public:
 
 protected:
 	std::shared_ptr<TreeNode> leftChild = nullptr;
-	TreeNode* rightChild = nullptr;
+	std::shared_ptr<TreeNode> rightChild = nullptr;
 };
 
 class Constant: public TreeNode
@@ -52,7 +52,6 @@ class Add: public TreeNode
 {
 public:
 	Add(TreeNode* left, TreeNode* right);
-	~Add() override {delete rightChild;}
 	double evaluate()override{return leftChild->evaluate() + rightChild->evaluate();}
 	Add* derivative(std::string var)override{return new Add(this->leftChild->derivative(var), this->rightChild->derivative(var));}
 	void print(std::ostream& os) const override;
@@ -63,7 +62,6 @@ class Subtract: public TreeNode
 {
 public:
 	Subtract(TreeNode* left, TreeNode* right);
-	~Subtract() override {delete rightChild;}
 	double evaluate() override {return leftChild->evaluate() - rightChild->evaluate();}
 	Subtract* derivative(std::string var)override{return new Subtract(this->leftChild->derivative(var), this->rightChild->derivative(var));}
 	void print(std::ostream& os) const override;
@@ -74,8 +72,7 @@ class Multiply: public TreeNode
 {
 public:
 	Multiply(TreeNode* left, TreeNode* right);
-	~Multiply() override {delete rightChild;}
-	double evaluate(){return leftChild->evaluate() * rightChild->evaluate();}
+	double evaluate() override {return leftChild->evaluate() * rightChild->evaluate();}
 	Multiply* derivative(std::string var)override{return nullptr;}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Multiply& tn);
@@ -85,8 +82,7 @@ class Divide: public TreeNode
 {
 public:
 	Divide(TreeNode* left, TreeNode* right);
-	~Divide() override {delete rightChild;}
-	double evaluate();
+	double evaluate() override;
 	Divide* derivative(std::string var)override{return nullptr;}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Divide& tn);
