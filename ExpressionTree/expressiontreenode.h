@@ -13,6 +13,7 @@ class TreeNode
 public:
 	virtual ~TreeNode(){}
 	virtual double evaluate() = 0;
+	virtual TreeNode* derivative(std::string var) = 0;
 	virtual void print(std::ostream& os) const = 0;
 	friend std::ostream& operator<<(std::ostream& out, const TreeNode& tn);
 	// placeholder for derivative()
@@ -28,6 +29,7 @@ class Constant: public TreeNode
 public:
 	Constant(double val){value = val;}
 	double evaluate() override {return value;}
+	Constant* derivative(std::string var)override {return new Constant(0.0);}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Constant& tn);
 private:
@@ -39,6 +41,7 @@ class Variable: public TreeNode
 public:
 	Variable(std::string str);
 	double evaluate() override;
+	Constant* derivative(std::string var)override;
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Variable& tn);
 private:
@@ -50,7 +53,8 @@ class Add: public TreeNode
 public:
 	Add(TreeNode* left, TreeNode* right);
 	~Add() override {delete rightChild;}
-	double evaluate(){return leftChild->evaluate() + rightChild->evaluate();}
+	double evaluate()override{return leftChild->evaluate() + rightChild->evaluate();}
+	Add* derivative(std::string var)override{return new Add(this->leftChild->derivative(var), this->rightChild->derivative(var));}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Add& tn);
 };
@@ -60,7 +64,8 @@ class Subtract: public TreeNode
 public:
 	Subtract(TreeNode* left, TreeNode* right);
 	~Subtract() override {delete rightChild;}
-	double evaluate(){return leftChild->evaluate() - rightChild->evaluate();}
+	double evaluate() override {return leftChild->evaluate() - rightChild->evaluate();}
+	Subtract* derivative(std::string var)override{return new Subtract(this->leftChild->derivative(var), this->rightChild->derivative(var));}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Subtract& tn);
 };
@@ -71,6 +76,7 @@ public:
 	Multiply(TreeNode* left, TreeNode* right);
 	~Multiply() override {delete rightChild;}
 	double evaluate(){return leftChild->evaluate() * rightChild->evaluate();}
+	Multiply* derivative(std::string var)override{return nullptr;}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Multiply& tn);
 };
@@ -81,6 +87,7 @@ public:
 	Divide(TreeNode* left, TreeNode* right);
 	~Divide() override {delete rightChild;}
 	double evaluate();
+	Divide* derivative(std::string var)override{return nullptr;}
 	void print(std::ostream& os) const override;
 	friend std::ostream& operator<<(std::ostream &out, const Divide& tn);
 };

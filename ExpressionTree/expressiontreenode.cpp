@@ -26,6 +26,15 @@ double Variable::evaluate()
 	return res->second;
 }
 
+Constant *Variable::derivative(std::string var)
+{
+	if(var.compare(this->variableName) == 0){
+		return new Constant(1.0);
+	}else{
+		return new Constant(0.0);
+	}
+}
+
 void Variable::print(std::ostream &os) const
 {
 	os << "(" << this->variableName << ")";

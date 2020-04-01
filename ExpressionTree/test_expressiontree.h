@@ -84,6 +84,88 @@ TEST(expressionTree, print){
 	EXPECT_EQ(output, "(((2.3)*(Xray))+((Yellow)*((Zebra)-(Xray))))\n");
 }
 
+TEST(expressionTree, constantDerivative){
+	std::shared_ptr<Constant> c(new Constant(3.3));
+	auto d = c->derivative("X");
+	EXPECT_EQ(0.0, d->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *d << std::endl;
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "(0)\n");
+}
 
+TEST(expressionTree, variableDerivative){
+	std::shared_ptr<Variable> c(new Variable("X"));
+	auto d = c->derivative("X");
+	auto f = c->derivative("Y");
+	EXPECT_EQ(1.0, d->evaluate());
+	EXPECT_EQ(0.0, f->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *d << std::endl;
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "(1)\n");
+	testing::internal::CaptureStdout();
+	std::cout << *f << std::endl;
+	output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "(0)\n");
+}
+
+TEST(expressionTree, addDerivative){
+	std::shared_ptr<Add> a(new Add(new Constant(3.3), new Constant(3.3)));
+	auto c = a->derivative("X");
+	EXPECT_EQ(0.0, c->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *c << std::endl;
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((0)+(0))\n");
+
+
+	TreeNode::lookUpTable.insert_or_assign("X", 2.2);
+	Add* b = new Add(new Variable("X"), new Variable("X"));
+	auto d = b->derivative("X");
+	EXPECT_EQ(2.0, d->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *d << std::endl;
+	output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((1)+(1))\n");
+
+	auto e = b->derivative("Y");
+	EXPECT_EQ(0.0, e->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *e << std::endl;
+	output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((0)+(0))\n");
+
+
+}
+
+TEST(expressionTree, subtractDerivative){
+	std::shared_ptr<Subtract> a(new Subtract(new Constant(3.3), new Constant(3.3)));
+	auto c = a->derivative("X");
+	EXPECT_EQ(0.0, c->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *c << std::endl;
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((0)-(0))\n");
+
+
+	TreeNode::lookUpTable.insert_or_assign("X", 2.2);
+	Subtract* b = new Subtract(new Variable("X"), new Variable("X"));
+	auto d = b->derivative("X");
+	EXPECT_EQ(0.0, d->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *d << std::endl;
+	output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((1)-(1))\n");
+
+	auto e = b->derivative("Y");
+	EXPECT_EQ(0.0, e->evaluate());
+	testing::internal::CaptureStdout();
+	std::cout << *e << std::endl;
+	output = testing::internal::GetCapturedStdout();
+	EXPECT_EQ(output, "((0)-(0))\n");
+
+
+}
 
 #endif // TST_EXPRESSIONTREE_H
