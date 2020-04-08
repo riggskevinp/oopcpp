@@ -15,6 +15,7 @@
 #include "passenger.h"
 #include "direction.h"
 #include "floor.h"
+#include "elevator.h"
 
 using namespace testing;
 
@@ -52,6 +53,27 @@ TEST(elevatorSim, floorTest){
 	EXPECT_EQ(floors[3].UpPassengers.size(), 1);
 }
 
+TEST(elevatorSim, elevatorTest){
+	Elevator e;
+	Elevator d(Direction::Down);
+	std::queue<Passenger> passengerQueue;
+	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
 
+	std::vector<Floor> floors(101,Floor());
+
+	while(!passengerQueue.empty()){
+		floors[passengerQueue.front().getStartFloor()].addPassenger(passengerQueue.front());
+		passengerQueue.pop();
+	}
+
+	//EXPECT_EQ(floors[54].UpPassengers.front().getEndFloor(), 55);
+	//EXPECT_EQ(floors[42].UpPassengers.back().getEndFloor(), 76);
+	e.addPassenger(floors[54].UpPassengers.front()); //end floor 55
+	e.addPassenger(floors[42].UpPassengers.front()); //end floor 76
+	EXPECT_EQ(e.unboardPassenger().getEndFloor(), 55);
+	d.addPassenger(floors[54].UpPassengers.front()); //end floor 55
+	d.addPassenger(floors[42].UpPassengers.front()); //end floor 76
+	EXPECT_EQ(d.unboardPassenger().getEndFloor(), 76);
+}
 
 #endif // TST_ELEVATORSIM_H

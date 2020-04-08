@@ -7,12 +7,12 @@ class Passenger
 {
 public:
 	explicit Passenger(int t_startTime, int t_startFloor, int t_endFloor);
-	int getStartTime(){return StartTime;}
-	int getStartFloor(){return StartFloor;}
-	int getEndFloor(){return EndFloor;}
+	int getStartTime() const{return StartTime;}
+	int getStartFloor() const{return StartFloor;}
+	int getEndFloor() const{return EndFloor;}
 	Direction getDirection(){return direction;}
 	void setEndTime(int time){EndTime = time;}
-	int getEndTime(){return EndTime;}
+	int getEndTime() const{return EndTime;}
 
 
 private:
