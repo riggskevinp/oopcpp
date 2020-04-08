@@ -11,7 +11,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     elevator.cpp \
-    elevatorsim.cpp \
+    elevatorsimulation.cpp \
     floor.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,7 +20,7 @@ SOURCES += \
 HEADERS += \
     direction.h \
     elevator.h \
-    elevatorsim.h \
+    elevatorsimulation.h \
     elevatorutils.h \
     floor.h \
     mainwindow.h \
