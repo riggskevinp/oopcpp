@@ -19,7 +19,9 @@ void elevatorutils::readCSV(const std::string file, std::queue<Passenger> &passe
 		while(std::getline(s,cell,',')){
 			row.push_back(std::stoi(cell));
 		}
-		passengerQueue.push(Passenger(row[0],row[1],row[2]));
+		if(row[1] != row[2]){
+			passengerQueue.push(Passenger(row[0],row[1],row[2]));
+		}
 	}
 
 

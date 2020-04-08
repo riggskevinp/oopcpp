@@ -14,12 +14,26 @@ class Elevator
 public:
 	Elevator(Direction d = Direction::Up, int c_timebetweenfloors = 10, int c_floor = 0);
 	void addPassenger(Passenger newPassenger);
+	bool addPassenger(Floor *f);
 	Passenger unboardPassenger();
-	Direction direction;
-	Motion motion;
+	bool tryUnloadPassenger();
+	Direction getDirection() const{return direction;}
+	Motion getMotion() const{return motion;}
+	void stop(){motion = Motion::Stopped;}
+	void stepTimer() {timer--;}
+	bool isEmpty(){return passengers.empty();}
+	void startMoving(Direction d);
+	int getFloor() const{return floor;}
+	int getTimer() const{return timer;}
+	void passFloor();
+	bool passengerNeedsStop();
+	void stopping();
 
 private:
+	Direction direction;
+	Motion motion;
 	int timeBetweenFloors;
+	int timeToStop = 2;
 	//next floor a passenger could get off or on
 	//could be the floor moving to or stopped at.
 	int floor;

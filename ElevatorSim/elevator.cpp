@@ -27,11 +27,88 @@ void Elevator::addPassenger(Passenger newPassenger)
 	}
 }
 
+bool Elevator::addPassenger(Floor *f)
+{
+	if(passengers.size() >= 8){
+		return false;
+	}
+	if(direction == Direction::Up){
+		if(!f->UpPassengers.empty()){
+			addPassenger(f->UpPassengers.front());
+			f->UpPassengers.pop();
+			return true;
+		}
+		return false;
+	}else{
+		if(!f->DownPassengers.empty()){
+			addPassenger(f->DownPassengers.front());
+			f->DownPassengers.pop();
+			return true;
+		}
+		return false;
+	}
+}
+
 Passenger Elevator::unboardPassenger()
 {
 	Passenger temp = passengers.front();
 	passengers.pop_front();
 	return temp;
 
+}
+
+bool Elevator::tryUnloadPassenger()
+{
+	for(auto p : passengers){
+		if(p.getEndFloor() == floor){
+			return true;
+		}
+	}
+	return false;
+}
+
+void Elevator::startMoving(Direction d)
+{
+	motion = Motion::Moving;
+	direction = d;
+	timer += timeBetweenFloors;
+}
+
+void Elevator::passFloor()
+{
+	timer += timeBetweenFloors;
+	if(direction == Direction::Up){
+		if(floor <= 99){
+			floor++;
+		} else{
+			floor--;
+			direction = Direction::Down;
+		}
+	}else{
+		if(floor >= 1){
+			floor--;
+		} else{
+			floor++;
+			direction = Direction::Up;
+		}
+	}
+}
+
+bool Elevator::passengerNeedsStop()
+{
+	for(auto p : passengers){
+		if(p.getEndFloor() == floor){
+			return true;
+		}
+	}
+
+	return false;
+
+}
+
+void Elevator::stopping()
+{
+	timer += timeToStop;
+	motion = Motion::Stopping;
 }
 

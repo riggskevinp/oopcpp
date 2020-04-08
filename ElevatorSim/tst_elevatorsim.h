@@ -69,11 +69,11 @@ TEST(elevatorSim, elevatorTest){
 	//EXPECT_EQ(floors[54].UpPassengers.front().getEndFloor(), 55);
 	//EXPECT_EQ(floors[42].UpPassengers.back().getEndFloor(), 76);
 	e.addPassenger(floors[54].UpPassengers.front()); //end floor 55
-	e.addPassenger(floors[42].UpPassengers.front()); //end floor 76
+	e.addPassenger(floors[42].UpPassengers.front()); //end floor 62
 	EXPECT_EQ(e.unboardPassenger().getEndFloor(), 55);
 	d.addPassenger(floors[54].UpPassengers.front()); //end floor 55
-	d.addPassenger(floors[42].UpPassengers.front()); //end floor 76
-	EXPECT_EQ(d.unboardPassenger().getEndFloor(), 76);
+	d.addPassenger(floors[42].UpPassengers.front()); //end floor 62
+	EXPECT_EQ(d.unboardPassenger().getEndFloor(), 62);
 }
 
 #endif // TST_ELEVATORSIM_H

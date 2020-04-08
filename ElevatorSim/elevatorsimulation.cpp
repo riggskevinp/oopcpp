@@ -1,6 +1,5 @@
 #include "elevatorsimulation.h"
 
-
 ElevatorSim::ElevatorSim():
 	floors(101,Floor())
 {
@@ -26,25 +25,68 @@ int ElevatorSim::run()
 	return sumOfTravelTimes / numberOfPassengers;
 }
 
+bool ElevatorSim::floorsEmpty()
+{
+	for(auto f : floors){
+		if(!f.UpPassengers.empty() || !f.DownPassengers.empty()){
+			return false;
+		}
+	}
+	return true;
+}
+
+Direction ElevatorSim::getOccupiedFloorDirection(int floorNumber)
+{
+	std::vector<Floor>::iterator itr;
+	for(itr = floors.begin(); itr < floors.end(); itr++){
+		if(!itr->UpPassengers.empty() || !itr->DownPassengers.empty()){
+			int index = std::distance(floors.begin(),itr);
+			if(floorNumber > index){
+				return Direction::Down;
+			}else{
+				return Direction::Up;
+			}
+		}
+	}
+}
+
 void ElevatorSim::operate(Elevator &e)
 {
-	/*
-	if(e.motion == Motion::Moving){
+	if(e.getMotion() == Motion::Moving){
+		if(e.getTimer() <= 0){
+			e.passFloor();
+		}
+		if(e.passengerNeedsStop()){
+			e.stopping();
+			e.stepTimer();
+		}
 
 	}
-	if(e.motion == Motion::Stopping){
-		if(e.timer <= 0){
-			e.motion = Motion::Stopped;
+	if(e.getMotion() == Motion::Stopping){
+		if(e.getTimer() <= 0){
+			e.stop();
 			return;
 		} else{
-			e.timer--;
+			e.stepTimer();
 			return;
 		}
 	}
-	if(e.motion == Motion::Stopped){
-		if(e.floor == e.passengers.front().getEndFloor()){
-			sumOfTravelTimes += (timer - e.unboardPassenger()
+	if(e.getMotion() == Motion::Stopped){
+		while(e.tryUnloadPassenger()){ //unboard all passengers possible
+			sumOfTravelTimes += (timer - e.unboardPassenger().getStartTime());
 		}
+		while(e.addPassenger(&floors.at(e.getFloor()))){
+
+		}
+		if(!e.isEmpty()){
+			e.startMoving(e.getDirection());
+			return;
+		}else if(!floorsEmpty()){
+			e.startMoving(getOccupiedFloorDirection(e.getFloor()));
+		}else{
+			return;
+		}
+
 	}
-	*/
+
 }
