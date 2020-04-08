@@ -10,11 +10,17 @@ CONFIG += thread
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+    floor.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    passenger.cpp
 
 HEADERS += \
+    direction.h \
+    elevatorutils.h \
+    floor.h \
     mainwindow.h \
+    passenger.h \
     tst_elevatorsim.h
 
 FORMS += \

@@ -9,6 +9,12 @@
 #include <memory>
 #include <cmath>
 
+#include <vector>
+
+#include "elevatorutils.h"
+#include "passenger.h"
+#include "direction.h"
+#include "floor.h"
 
 using namespace testing;
 
@@ -18,6 +24,23 @@ TEST(newgt, newgtc)
 	ASSERT_THAT(0, Eq(0));
 }
 
+TEST(elevatorSim, elevatorUtilities){
+	std::queue<Passenger> passengerQueue;
+	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
+	EXPECT_EQ(passengerQueue.front().getStartTime(), 41);
+}
+
+TEST(elevatorSim, passengerTest){
+	Passenger p = Passenger(14,32,50);
+	EXPECT_EQ(p.getDirection(), Direction::Up);
+}
+
+TEST(elevatorSim, floorTest){
+	std::vector<Floor> floors(101,Floor());
+	Passenger p = Passenger(14,32,50);
+	floors[3].addPassenger(p);
+	EXPECT_EQ(floors[3].UpPassengers.size(), 1);
+}
 
 
 
