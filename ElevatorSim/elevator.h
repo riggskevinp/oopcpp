@@ -5,6 +5,7 @@
 
 #include "direction.h"
 #include "passenger.h"
+#include "floor.h"
 
 enum class Motion{Moving,Stopping,Stopped};
 
@@ -14,10 +15,10 @@ public:
 	Elevator(Direction d = Direction::Up, int c_timebetweenfloors = 10, int c_floor = 0);
 	void addPassenger(Passenger newPassenger);
 	Passenger unboardPassenger();
-
-private:
 	Direction direction;
 	Motion motion;
+
+private:
 	int timeBetweenFloors;
 	//next floor a passenger could get off or on
 	//could be the floor moving to or stopped at.

@@ -12,6 +12,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     elevator.cpp \
     elevatorsimulation.cpp \
+    elevatorutils.cpp \
     floor.cpp \
     main.cpp \
     mainwindow.cpp \

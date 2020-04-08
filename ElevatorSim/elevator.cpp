@@ -16,22 +16,22 @@ void Elevator::addPassenger(Passenger newPassenger)
 {
 
 	passengers.push_back(newPassenger);
-	passengers.sort([](const Passenger &a, const Passenger &b){
-						return a.getEndFloor() < b.getEndFloor();
-					});
-
+	if(direction == Direction::Up){
+		passengers.sort([](const Passenger &a, const Passenger &b){
+							return a.getEndFloor() < b.getEndFloor();
+						});
+	} else{
+		passengers.sort([](const Passenger &a, const Passenger &b){
+							return a.getEndFloor() > b.getEndFloor();
+						});
+	}
 }
 
 Passenger Elevator::unboardPassenger()
 {
-	if(direction == Direction::Up){
-		Passenger temp = passengers.front();
-		passengers.pop_front();
-		return temp;
-	} else{
-		Passenger temp = passengers.back();
-		passengers.pop_back();
-		return temp;
-	}
+	Passenger temp = passengers.front();
+	passengers.pop_front();
+	return temp;
+
 }
 

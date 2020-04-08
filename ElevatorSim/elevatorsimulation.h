@@ -4,10 +4,10 @@
 #include <vector>
 #include <queue>
 
+#include "elevatorutils.h"
 #include "passenger.h"
 #include "elevator.h"
 #include "floor.h"
-#include "elevatorutils.h"
 
 class ElevatorSim
 {
@@ -24,4 +24,4 @@ private:
 	int sumOfTravelTimes;
 };
 
-#endif // ELEVATORSIM_H
+#endif // ELEVATORSIMULATION_H

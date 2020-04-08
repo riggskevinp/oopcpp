@@ -1,10 +1,11 @@
 #include "elevatorsimulation.h"
 
+
 ElevatorSim::ElevatorSim():
 	floors(101,Floor())
 {
-	//using namespace elevatorutils;
-	//readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
+	using namespace elevatorutils;
+	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
 }
 
 int ElevatorSim::run()
