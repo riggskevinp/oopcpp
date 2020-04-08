@@ -28,6 +28,16 @@ TEST(elevatorSim, elevatorUtilities){
 	std::queue<Passenger> passengerQueue;
 	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
 	EXPECT_EQ(passengerQueue.front().getStartTime(), 41);
+
+	std::vector<Floor> floors(101,Floor());
+
+	while(!passengerQueue.empty()){
+		floors[passengerQueue.front().getStartFloor()].addPassenger(passengerQueue.front());
+		passengerQueue.pop();
+	}
+
+	EXPECT_EQ(floors[54].UpPassengers.front().getEndFloor(), 55);
+	EXPECT_EQ(floors[42].UpPassengers.back().getEndFloor(), 76);
 }
 
 TEST(elevatorSim, passengerTest){
