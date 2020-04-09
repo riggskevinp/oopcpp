@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "elevatorsimulation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,10 +16,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+	void runSimulation();
 
 
 private:
     Ui::MainWindow *ui;
+	ElevatorSim sim;
 
 };
 #endif // MAINWINDOW_H

@@ -1,6 +1,7 @@
 #include "elevator.h"
 #include <algorithm>
-
+#include <iostream>
+#include <QCoreApplication>
 
 Elevator::Elevator(Direction d, int c_timebetweenfloors, int c_floor):
 	direction(d),
@@ -68,6 +69,7 @@ Passenger Elevator::unboardPassenger()
 	if(passengers.front().getEndFloor() == floor){
 		Passenger temp = passengers.front();
 		passengers.pop_front();
+		//std::cout << floor << std::endl;
 		return temp;
 	}
 
@@ -88,6 +90,15 @@ void Elevator::startMoving(Direction d)
 	motion = Motion::Moving;
 	direction = d;
 	timer += timeBetweenFloors;
+	if(direction == Direction::Up){
+		passengers.sort([](const Passenger &a, const Passenger &b){
+							return a.getEndFloor() < b.getEndFloor();
+						});
+	} else{
+		passengers.sort([](const Passenger &a, const Passenger &b){
+							return a.getEndFloor() > b.getEndFloor();
+						});
+	}
 }
 
 void Elevator::passFloor()
@@ -96,18 +107,23 @@ void Elevator::passFloor()
 	if(direction == Direction::Up){
 		if(floor <= 99){
 			floor++;
+			emit floorChanged(floor);
 		} else{
 			floor--;
+			emit floorChanged(floor);
 			direction = Direction::Down;
 		}
 	}else{
 		if(floor >= 1){
 			floor--;
+			emit floorChanged(floor);
 		} else{
 			floor++;
+			emit floorChanged(floor);
 			direction = Direction::Up;
 		}
 	}
+	QCoreApplication::processEvents();
 }
 
 bool Elevator::passengerNeedsStop()

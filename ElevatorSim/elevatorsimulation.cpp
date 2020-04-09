@@ -23,10 +23,11 @@ int ElevatorSim::run()
 			}
 
 		for(auto &e : elevators){
-			operate(e);
+			operate(*e);
 		}
-	}
 
+	}
+	std::cout << sumOfTravelTimes << " " << numberOfPassengers << std::endl;
 	return sumOfTravelTimes / numberOfPassengers;
 }
 
@@ -60,8 +61,49 @@ Direction ElevatorSim::getOccupiedFloorDirection(int floorNumber)
 	}
 }
 
+Direction ElevatorSim::getClosestOccupiedFloorDirection(int floorNumber)
+{
+	int distanceDown = 101;
+	int distanceUp = distanceDown;
+
+	std::vector<Floor>::reverse_iterator ritr;
+	for(ritr = floors.rbegin() + floorNumber; ritr < floors.rend(); ritr++){
+		if(!ritr->UpPassengers.empty() || !ritr->DownPassengers.empty()){
+			int distanceDown = std::distance(floors.rbegin(),ritr);
+			/*
+			if(floorNumber > index){
+				return Direction::Down;
+			}else{
+				return Direction::Up;
+			}*/
+		}
+	}
+
+	std::vector<Floor>::iterator itr;
+	for(itr = floors.begin() + floorNumber; itr < floors.end(); itr++){
+		if(!itr->UpPassengers.empty() || !itr->DownPassengers.empty()){
+			int distanceUp = std::distance(floors.begin(),itr);
+			/*
+			if(floorNumber > index){
+				return Direction::Down;
+			}else{
+				return Direction::Up;
+			}*/
+		}
+	}
+	if(distanceUp > distanceDown){
+		return Direction::Up;
+	}else{
+		return Direction::Down;
+	}
+}
+
 void ElevatorSim::operate(Elevator &e)
 {
+	if(e.isEmpty() && floorsEmpty()){
+		e.stop();
+		//std::cout << timer << std::endl;
+	}
 	if(e.getMotion() == Motion::Moving){
 		if(e.getTimer() <= 0){
 			e.passFloor();
@@ -92,8 +134,9 @@ void ElevatorSim::operate(Elevator &e)
 	}
 	if(e.getMotion() == Motion::Stopped){
 		while(e.tryUnloadPassenger()){ //unboard all passengers possible
-
-			sumOfTravelTimes += (timer - e.unboardPassenger().getStartTime());
+			int travelTime = timer - e.unboardPassenger().getStartTime();
+			sumOfTravelTimes += travelTime;
+			//std::cout << timer << " " << travelTime << " " << e.getFloor() << std::endl;
 
 		}
 		while(e.addPassenger(&floors.at(e.getFloor()))){
@@ -103,7 +146,8 @@ void ElevatorSim::operate(Elevator &e)
 			return;
 		}
 		if(!floorsEmpty()){
-			e.startMoving(getOccupiedFloorDirection(e.getFloor()));
+			//e.startMoving(getOccupiedFloorDirection(e.getFloor()));
+			e.startMoving(getClosestOccupiedFloorDirection(e.getFloor()));
 		}
 		return;
 	}

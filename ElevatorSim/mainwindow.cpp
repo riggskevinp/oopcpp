@@ -2,24 +2,40 @@
 #include "ui_mainwindow.h"
 
 #include "elevatorsimulation.h"
+#include "elevator.h"
 
+#include <QThread>
+#include <QFuture>
+#include <QtConcurrent/QtConcurrent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+	, sim(ElevatorSim())
 {
+	ui->setupUi(this);
+
 	// resource management should be implemented better
-	ElevatorSim sim = ElevatorSim();
-	Elevator a = Elevator();
-	Elevator b = Elevator(Direction::Up, 10, 20);
-	Elevator c = Elevator(Direction::Up, 10, 40);
-	Elevator d = Elevator(Direction::Up, 10, 60);
-	//Elevator(Direction d = Direction::Up, int c_timebetweenfloors = 10, int c_floor = 0
+	//ElevatorSim sim = ElevatorSim();
+	Elevator *a = new Elevator();
+	Elevator *b = new Elevator(Direction::Up, 10, 20);
+	Elevator *c = new Elevator(Direction::Up, 10, 40);
+	Elevator *d = new Elevator(Direction::Up, 10, 60);
+
+	connect(a, &Elevator::floorChanged, ui->verticalSlider, &QSlider::setValue);
+	connect(b, &Elevator::floorChanged, ui->verticalSlider_2, &QSlider::setValue);
+	connect(c, &Elevator::floorChanged, ui->verticalSlider_3, &QSlider::setValue);
+	connect(d, &Elevator::floorChanged, ui->verticalSlider_4, &QSlider::setValue);
+
 	sim.addElevator(a);
 	sim.addElevator(b);
 	sim.addElevator(c);
 	sim.addElevator(d);
-	int averageTravelTime = sim.run();
+
+
+	connect(ui->pushButton, &QPushButton::clicked,[this](){
+		ui->label_2->setText(QString("%1 seconds").arg(this->sim.run()));
+		});
 
 
 
@@ -29,7 +45,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
+}
+
+void MainWindow::runSimulation()
+{
+	sim.run();
 }
 
 

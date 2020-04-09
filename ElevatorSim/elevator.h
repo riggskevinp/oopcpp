@@ -7,10 +7,14 @@
 #include "passenger.h"
 #include "floor.h"
 
+#include <QObject>
+#include <QSlider>
+
 enum class Motion{Moving,Stopping,Stopped};
 
-class Elevator
+class Elevator: public QObject
 {
+	Q_OBJECT
 public:
 	Elevator(Direction d = Direction::Up, int c_timebetweenfloors = 10, int c_floor = 0);
 	void addPassenger(Passenger newPassenger);
@@ -28,6 +32,9 @@ public:
 	void passFloor();
 	bool passengerNeedsStop();
 	void stopping();
+
+signals:
+	void floorChanged(int floor);
 
 private:
 	Direction direction;
