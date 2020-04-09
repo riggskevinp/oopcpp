@@ -54,10 +54,12 @@ TEST(elevatorSim, floorTest){
 }
 
 TEST(elevatorSim, elevatorTest){
-	Elevator e;
-	Elevator d(Direction::Down);
+	Elevator e(Direction::Up, 10, 55);
+	Elevator d(Direction::Down, 10, 62);
 	std::queue<Passenger> passengerQueue;
+
 	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
+
 
 	std::vector<Floor> floors(101,Floor());
 
@@ -66,14 +68,15 @@ TEST(elevatorSim, elevatorTest){
 		passengerQueue.pop();
 	}
 
-	//EXPECT_EQ(floors[54].UpPassengers.front().getEndFloor(), 55);
-	//EXPECT_EQ(floors[42].UpPassengers.back().getEndFloor(), 76);
 	e.addPassenger(floors[54].UpPassengers.front()); //end floor 55
 	e.addPassenger(floors[42].UpPassengers.front()); //end floor 62
 	EXPECT_EQ(e.unboardPassenger().getEndFloor(), 55);
+
 	d.addPassenger(floors[54].UpPassengers.front()); //end floor 55
 	d.addPassenger(floors[42].UpPassengers.front()); //end floor 62
 	EXPECT_EQ(d.unboardPassenger().getEndFloor(), 62);
+
+
 }
 
 #endif // TST_ELEVATORSIM_H

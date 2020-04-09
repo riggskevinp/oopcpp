@@ -15,11 +15,13 @@ class ElevatorSim
 public:
 	ElevatorSim();
 	int run(); // run simulation, return average trip time as an int?
+	void addElevator(Elevator e){elevators.push_back(e);}
 
 
 
 private:
 	bool floorsEmpty();
+	bool floorEmpty(int floor);
 	Direction getOccupiedFloorDirection(int floorNumber);
 	//could add a getNextOccupiedFloorDirection()
 	void operate(Elevator &e);
@@ -28,6 +30,7 @@ private:
 	std::vector<Elevator> elevators;
 	int timer;
 	int sumOfTravelTimes;
+	int passengersAtDestination;
 };
 
 #endif // ELEVATORSIMULATION_H

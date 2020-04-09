@@ -23,6 +23,7 @@ void elevatorutils::readCSV(const std::string file, std::queue<Passenger> &passe
 			passengerQueue.push(Passenger(row[0],row[1],row[2]));
 		}
 	}
+	fin.close();
 
 
 }

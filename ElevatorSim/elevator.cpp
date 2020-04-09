@@ -32,6 +32,20 @@ bool Elevator::addPassenger(Floor *f)
 	if(passengers.size() >= 8){
 		return false;
 	}
+	if(passengers.size() <= 0){
+		if(!f->UpPassengers.empty()){
+			addPassenger(f->UpPassengers.front());
+			f->UpPassengers.pop();
+			direction = Direction::Up;
+			return true;
+		}
+		if(!f->DownPassengers.empty()){
+			addPassenger(f->DownPassengers.front());
+			f->DownPassengers.pop();
+			direction = Direction::Down;
+			return true;
+		}
+	}
 	if(direction == Direction::Up){
 		if(!f->UpPassengers.empty()){
 			addPassenger(f->UpPassengers.front());
@@ -51,9 +65,11 @@ bool Elevator::addPassenger(Floor *f)
 
 Passenger Elevator::unboardPassenger()
 {
-	Passenger temp = passengers.front();
-	passengers.pop_front();
-	return temp;
+	if(passengers.front().getEndFloor() == floor){
+		Passenger temp = passengers.front();
+		passengers.pop_front();
+		return temp;
+	}
 
 }
 

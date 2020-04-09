@@ -10,18 +10,23 @@ ElevatorSim::ElevatorSim():
 int ElevatorSim::run()
 {
 	sumOfTravelTimes = 0;
+	passengersAtDestination = 0;
 	int numberOfPassengers = passengerQueue.size();
 
-	for(timer = 0; timer <= 30000; timer++){
-		while(passengerQueue.front().getStartTime() >= timer){
-			floors[passengerQueue.front().getStartFloor()].addPassenger(passengerQueue.front());
-			passengerQueue.pop();
-		}
+	for(timer = 0; timer <= 40000; timer++){
+		bool isEmpty = true;
+		isEmpty = passengerQueue.empty();
+			while(!isEmpty && passengerQueue.front().getStartTime() <= timer){
+				floors[passengerQueue.front().getStartFloor()].addPassenger(passengerQueue.front());
+				passengerQueue.pop();
+				isEmpty = passengerQueue.empty();
+			}
 
 		for(auto &e : elevators){
 			operate(e);
 		}
 	}
+
 	return sumOfTravelTimes / numberOfPassengers;
 }
 
@@ -33,6 +38,11 @@ bool ElevatorSim::floorsEmpty()
 		}
 	}
 	return true;
+}
+
+bool ElevatorSim::floorEmpty(int floor)
+{
+	return floors.at(floor).UpPassengers.empty() && floors.at(floor).DownPassengers.empty();
 }
 
 Direction ElevatorSim::getOccupiedFloorDirection(int floorNumber)
@@ -56,10 +66,19 @@ void ElevatorSim::operate(Elevator &e)
 		if(e.getTimer() <= 0){
 			e.passFloor();
 		}
+		if(e.isEmpty()){
+			if(!floorEmpty(e.getFloor())){
+				e.stopping();
+				e.stepTimer();
+			}
+			e.stepTimer();
+		}
 		if(e.passengerNeedsStop()){
+
 			e.stopping();
 			e.stepTimer();
 		}
+		e.stepTimer();
 
 	}
 	if(e.getMotion() == Motion::Stopping){
@@ -73,20 +92,20 @@ void ElevatorSim::operate(Elevator &e)
 	}
 	if(e.getMotion() == Motion::Stopped){
 		while(e.tryUnloadPassenger()){ //unboard all passengers possible
+
 			sumOfTravelTimes += (timer - e.unboardPassenger().getStartTime());
+
 		}
 		while(e.addPassenger(&floors.at(e.getFloor()))){
-
 		}
 		if(!e.isEmpty()){
 			e.startMoving(e.getDirection());
 			return;
-		}else if(!floorsEmpty()){
-			e.startMoving(getOccupiedFloorDirection(e.getFloor()));
-		}else{
-			return;
 		}
-
+		if(!floorsEmpty()){
+			e.startMoving(getOccupiedFloorDirection(e.getFloor()));
+		}
+		return;
 	}
 
 }
