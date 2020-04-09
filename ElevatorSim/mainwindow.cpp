@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
 	// resource management should be implemented better
 	//ElevatorSim sim = ElevatorSim();
 	Elevator *a = new Elevator();
-	Elevator *b = new Elevator(Direction::Up, 10, 20);
-	Elevator *c = new Elevator(Direction::Up, 10, 40);
-	Elevator *d = new Elevator(Direction::Up, 10, 60);
+	Elevator *b = new Elevator(Direction::Up, 10, 0);
+	Elevator *c = new Elevator(Direction::Up, 10, 0);
+	Elevator *d = new Elevator(Direction::Up, 10, 0);
 
 	connect(a, &Elevator::floorChanged, ui->verticalSlider, &QSlider::setValue);
 	connect(b, &Elevator::floorChanged, ui->verticalSlider_2, &QSlider::setValue);

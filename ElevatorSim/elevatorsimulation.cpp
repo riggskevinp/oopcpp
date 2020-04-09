@@ -98,29 +98,49 @@ Direction ElevatorSim::getClosestOccupiedFloorDirection(int floorNumber)
 	}
 }
 
+bool ElevatorSim::floorHasPassengersInSameDirection(int f, Direction d)
+{
+	if(d == Direction::Up){
+		return !floors.at(f).UpPassengers.empty();
+	}else{
+		return !floors.at(f).DownPassengers.empty();
+	}
+}
+
 void ElevatorSim::operate(Elevator &e)
 {
 	if(e.isEmpty() && floorsEmpty()){
-		e.stop();
+		e.stopping();
+		e.stepTimer();
 		//std::cout << timer << std::endl;
+		return;
 	}
 	if(e.getMotion() == Motion::Moving){
 		if(e.getTimer() <= 0){
 			e.passFloor();
+			return;
 		}
 		if(e.isEmpty()){
 			if(!floorEmpty(e.getFloor())){
 				e.stopping();
 				e.stepTimer();
+				return;
 			}
 			e.stepTimer();
+			return;
 		}
-		if(e.passengerNeedsStop()){
-
+		if(e.passengerCount() < 8 && floorHasPassengersInSameDirection(e.getFloor(), e.getDirection())){
 			e.stopping();
 			e.stepTimer();
+			return;
+		}
+		if(e.passengerNeedsStop()){
+			e.stopping();
+			e.stepTimer();
+			return;
 		}
 		e.stepTimer();
+		return;
 
 	}
 	if(e.getMotion() == Motion::Stopping){
@@ -136,7 +156,7 @@ void ElevatorSim::operate(Elevator &e)
 		while(e.tryUnloadPassenger()){ //unboard all passengers possible
 			int travelTime = timer - e.unboardPassenger().getStartTime();
 			sumOfTravelTimes += travelTime;
-			//std::cout << timer << " " << travelTime << " " << e.getFloor() << std::endl;
+			std::cout << timer << " " << travelTime << " " << e.getFloor() << " " << e.passengerCount() << std::endl;
 
 		}
 		while(e.addPassenger(&floors.at(e.getFloor()))){
@@ -146,10 +166,17 @@ void ElevatorSim::operate(Elevator &e)
 			return;
 		}
 		if(!floorsEmpty()){
+			// Choose algorithm, could make this dynamic
 			//e.startMoving(getOccupiedFloorDirection(e.getFloor()));
-			e.startMoving(getClosestOccupiedFloorDirection(e.getFloor()));
+			//e.startMoving(getClosestOccupiedFloorDirection(e.getFloor()));
+			e.startMoving(e.getDirection());
 		}
 		return;
 	}
+
+}
+
+void ElevatorSim::strategy(Elevator &e)
+{
 
 }

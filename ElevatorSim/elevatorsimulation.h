@@ -23,9 +23,10 @@ private:
 	bool floorsEmpty();
 	bool floorEmpty(int floor);
 	Direction getOccupiedFloorDirection(int floorNumber);
-	//could add a getClosestOccupiedFloorDirection()
 	Direction getClosestOccupiedFloorDirection(int floorNumber);
+	bool floorHasPassengersInSameDirection(int f, Direction d);
 	void operate(Elevator &e);
+	void strategy(Elevator &e);
 	std::queue<Passenger> passengerQueue;
 	std::vector<Floor> floors;
 	std::vector<Elevator*> elevators;

@@ -32,6 +32,7 @@ public:
 	void passFloor();
 	bool passengerNeedsStop();
 	void stopping();
+	int passengerCount(){return passengers.size();}
 
 signals:
 	void floorChanged(int floor);
