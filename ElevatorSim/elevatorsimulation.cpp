@@ -1,7 +1,8 @@
 #include "elevatorsimulation.h"
 
-ElevatorSim::ElevatorSim():
-	floors(101,Floor())
+ElevatorSim::ElevatorSim(QTextEdit* t):
+	floors(101,Floor()),
+	txt(t)
 {
 	using namespace elevatorutils;
 	elevatorutils::readCSV("Mod10_Assignment_Elevators.csv", passengerQueue);
@@ -12,8 +13,10 @@ int ElevatorSim::run()
 	sumOfTravelTimes = 0;
 	passengersAtDestination = 0;
 	int numberOfPassengers = passengerQueue.size();
+	txt->append(QString("StartTime,StartFloor,EndFloor,EndTime,TimeElapsed"));
+	txt->show();
 
-	for(timer = 0; timer <= 40000; timer++){
+	for(timer = 0; timer <= 30000; timer++){
 		bool isEmpty = true;
 		isEmpty = passengerQueue.empty();
 			while(!isEmpty && passengerQueue.front().getStartTime() <= timer){
@@ -154,9 +157,12 @@ void ElevatorSim::operate(Elevator &e)
 	}
 	if(e.getMotion() == Motion::Stopped){
 		while(e.tryUnloadPassenger()){ //unboard all passengers possible
-			int travelTime = timer - e.unboardPassenger().getStartTime();
+			Passenger temp = e.unboardPassenger();
+			int travelTime = timer - temp.getStartTime();
 			sumOfTravelTimes += travelTime;
-			std::cout << timer << " " << travelTime << " " << e.getFloor() << " " << e.passengerCount() << std::endl;
+			std::cout << temp.getStartTime() << " " << temp.getStartFloor() << " " << temp.getEndFloor() << " " << timer << std::endl;
+			txt->append(QString("%1,%2,%3,%4,%5").arg(temp.getStartTime()).arg(temp.getStartFloor()).arg(temp.getEndFloor()).arg(timer).arg(timer - temp.getStartTime()));
+			txt->show();
 
 		}
 		while(e.addPassenger(&floors.at(e.getFloor()))){

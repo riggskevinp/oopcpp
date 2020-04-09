@@ -10,10 +10,12 @@
 #include "floor.h"
 #include "direction.h"
 
+#include <QTextEdit>
+
 class ElevatorSim
 {
 public:
-	ElevatorSim();
+	ElevatorSim(QTextEdit *t = nullptr);
 	int run(); // run simulation, return average trip time as an int?
 	void addElevator(Elevator *e){elevators.push_back(e);}
 
@@ -33,6 +35,7 @@ private:
 	int timer;
 	int sumOfTravelTimes;
 	int passengersAtDestination;
+	QTextEdit *txt;
 };
 
 #endif // ELEVATORSIMULATION_H

@@ -4,16 +4,13 @@
 #include "elevatorsimulation.h"
 #include "elevator.h"
 
-#include <QThread>
-#include <QFuture>
-#include <QtConcurrent/QtConcurrent>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-	, sim(ElevatorSim())
+	//, sim(ElevatorSim(ui->textEdit))
 {
 	ui->setupUi(this);
+	sim = ElevatorSim(ui->textEdit);
 
 	// resource management should be implemented better
 	//ElevatorSim sim = ElevatorSim();

@@ -22,17 +22,17 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QSlider" name="verticalSlider_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Start Simulation</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QSlider" name="verticalSlider">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Running</string>
       </property>
      </widget>
     </item>
@@ -50,19 +50,22 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Running</string>
+    <item row="1" column="0">
+     <widget class="QSlider" name="verticalSlider">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Start Simulation</string>
+    <item row="1" column="2">
+     <widget class="QSlider" name="verticalSlider_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QTextEdit" name="textEdit"/>
     </item>
    </layout>
   </widget>
