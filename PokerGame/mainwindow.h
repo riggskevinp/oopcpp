@@ -22,5 +22,6 @@ private:
 	PokerGame *pg;
 	QStringList faces = {"2","3","4","5","6","7","8","9","T","J","Q","K","A"};
 	QStringList suits = {"H","C","D","S"};
+	int currentBet = 0;
 };
 #endif // MAINWINDOW_H

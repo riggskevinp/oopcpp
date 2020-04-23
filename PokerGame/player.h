@@ -21,7 +21,7 @@ public:
 	// return the absolute value of hand
 	double getHandValue();
 	// control functions for manipulating player during hand
-	void fold(){}
+	void fold(){handValid = false;}
 	int bet(int chips);
 	// support viewing hand
 	const std::vector<Card>& showCards(){return cards;}
