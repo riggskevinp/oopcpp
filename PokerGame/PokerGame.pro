@@ -14,12 +14,14 @@ SOURCES += \
     deck.cpp \
     main.cpp \
     mainwindow.cpp \
+    player.cpp \
     pokerhand.cpp
 
 HEADERS += \
     card.h \
     deck.h \
     mainwindow.h \
+    player.h \
     pokerhand.h \
 	test_poker.h
 

@@ -8,6 +8,7 @@
 class PokerHand
 {
 public:
+	PokerHand() = default;
 	PokerHand(std::vector<Card>);
 	void addCard(Card card);
 	double getValue();

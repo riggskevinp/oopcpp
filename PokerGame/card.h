@@ -5,8 +5,8 @@ class Card
 {
 public:
 	Card(char suit, char face);
-	int getFace(){return this->face;}
-	int getSuit(){return this->suit;}
+	int getFace() const {return this->face;}
+	int getSuit() const {return this->suit;}
 
 private:
 	int suit;
