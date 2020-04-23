@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
+    pokergame.cpp \
     pokerhand.cpp
 
 HEADERS += \
@@ -22,6 +23,7 @@ HEADERS += \
     deck.h \
     mainwindow.h \
     player.h \
+    pokergame.h \
     pokerhand.h \
 	test_poker.h
 

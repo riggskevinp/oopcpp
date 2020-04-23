@@ -32,6 +32,8 @@ double Player::getHandValue()
 
 int Player::bet(int chips)
 {
-	chipCount -= chips;
+	if(chipCount >= chips){
+		chipCount -= chips;
+	}
 	return chips;
 }

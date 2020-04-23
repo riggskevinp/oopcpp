@@ -8,6 +8,7 @@
 #include "card.h"
 #include "deck.h"
 #include "player.h"
+#include "pokergame.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -70,6 +71,38 @@ TEST(playerTest, handSim){
 	}
 	EXPECT_EQ(p.showCards().front().getFace(), 5);
 	EXPECT_EQ(p.showCards().front().getSuit(), 0);
+}
+
+TEST(pokerGameTest, functionTest){
+	int players = 5;
+	PokerGame pg = PokerGame(players);
+	pg.deal();
+	for(auto p : pg.players){
+		std::cout << p.getHandValue() << " " << p.showCards().size() << std::endl;
+		for(auto c : p.showCards()){
+			std::cout << c.getFace() << "-" << c.getSuit() << " ";
+		}
+		std::cout << std::endl;
+	}
+	pg.showHands();
+	for(auto p : pg.players){
+		std::cout << p.getChipCount() << std::endl;
+	}
+	pg.newHand();
+
+	//second hand
+	pg.deal();
+	for(auto p : pg.players){
+		std::cout << p.getHandValue() << std::endl;
+		for(auto c : p.showCards()){
+			std::cout << c.getFace() << "-" << c.getSuit() << " ";
+		}
+		std::cout << std::endl;
+	}
+	pg.showHands();
+	for(auto p : pg.players){
+		std::cout << p.getChipCount() << std::endl;
+	}
 }
 
 #endif // TST_NEWGTC_H

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "pokergame.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,5 +19,8 @@ public:
 
 private:
 	Ui::MainWindow *ui;
+	PokerGame *pg;
+	QStringList faces = {"2","3","4","5","6","7","8","9","T","J","Q","K","A"};
+	QStringList suits = {"H","C","D","S"};
 };
 #endif // MAINWINDOW_H
