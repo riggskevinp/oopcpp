@@ -11,6 +11,7 @@ PokerGame::PokerGame(int numberOfPlayers)
 
 void PokerGame::deal()
 {
+	newHand();
 	deck.shuffle();
 	for(int i = 0; i < 5; i++){ // deal 5 cards
 		for(Player *p : players){ // deal around the table
