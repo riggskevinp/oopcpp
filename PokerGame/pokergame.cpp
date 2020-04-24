@@ -9,6 +9,16 @@ PokerGame::PokerGame(int numberOfPlayers)
 	}
 }
 
+PokerGame::~PokerGame()
+{
+	if(players.size() > 0){
+		for(auto p : players){
+			delete p;
+		}
+		players.clear();
+	}
+}
+
 void PokerGame::deal()
 {
 	newHand();

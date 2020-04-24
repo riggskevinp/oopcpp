@@ -16,6 +16,7 @@ class PokerGame: public QObject
 	Q_OBJECT
 public:
 	PokerGame(int numberOfPlayers);
+	~PokerGame();
 	void deal();
 	void newHand();
 	void showHands();
