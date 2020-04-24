@@ -20,6 +20,9 @@ void PokerHand::addCard(Card card)
 
 double PokerHand::getValue()
 {
+	if(value > 0){
+		return value;
+	}
 	if(this->cards.size() != 5){
 		return 0;
 	} else {
@@ -33,7 +36,8 @@ double PokerHand::getValue()
 			++suitCounts[card.getSuit()];
 			faceCounts[card.getFace()]++;
 		}
-		return calculateValue();
+		value = calculateValue();
+		return value;
 
 	}
 }

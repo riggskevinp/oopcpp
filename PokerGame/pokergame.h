@@ -2,6 +2,7 @@
 #define POKERGAME_H
 
 #include <vector>
+#include <QObject>
 
 #include "player.h"
 #include "deck.h"
@@ -10,17 +11,21 @@
 
 
 // Class for holding elements of a poker game
-class PokerGame
+class PokerGame: public QObject
 {
+	Q_OBJECT
 public:
 	PokerGame(int numberOfPlayers);
 	void deal();
 	void newHand();
 	void showHands();
 	int pot = 0;
-	std::vector<Player> players;
+	std::vector<Player*> players;
 	void winner();
 	Deck deck = Deck();
+
+signals:
+	void potChanged(int pot);
 
 private:
 

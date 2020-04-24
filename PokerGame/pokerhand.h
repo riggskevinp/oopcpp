@@ -18,6 +18,7 @@ private:
 	std::vector<Card> cards;
 	std::vector<int> faceCounts = std::vector<int>(13,0);
 	std::vector<int> suitCounts = std::vector<int>(4,0);
+	double value = 0;
 
 };
 

@@ -51,57 +51,58 @@ TEST(deckTest, useDeck){
 }
 
 TEST(playerTest, handSim){
-	Player p = Player();
+	Player *p = new Player();
 	Deck d = Deck();
 	for(int i = 0; i < 5; i++){
-		p.acceptCard(d.dealCard());
+		p->acceptCard(d.dealCard());
 	}
 	int pot = 0;
-	pot += p.bet(50);
-	EXPECT_EQ(p.getChipCount(), 150);
-	p.addChips(pot);
-	EXPECT_EQ(p.getChipCount(), 200);
-	EXPECT_EQ(p.getHandValue(), 10.04);
-	EXPECT_EQ(p.showCards().front().getFace(), 0);
-	EXPECT_EQ(p.showCards().front().getSuit(), 0);
+	pot += p->bet(50);
+	EXPECT_EQ(p->getChipCount(), 150);
+	p->addChips(pot);
+	EXPECT_EQ(p->getChipCount(), 200);
+	EXPECT_EQ(p->getHandValue(), 10.04);
+	EXPECT_EQ(p->showCards().front().getFace(), 0);
+	EXPECT_EQ(p->showCards().front().getSuit(), 0);
 
-	p.newHand();
+	p->newHand();
 	for(int i = 0; i < 5; i++){
-		p.acceptCard(d.dealCard());
+		p->acceptCard(d.dealCard());
 	}
-	EXPECT_EQ(p.showCards().front().getFace(), 5);
-	EXPECT_EQ(p.showCards().front().getSuit(), 0);
+	EXPECT_EQ(p->showCards().front().getFace(), 5);
+	EXPECT_EQ(p->showCards().front().getSuit(), 0);
 }
 
 TEST(pokerGameTest, functionTest){
 	int players = 5;
-	PokerGame pg = PokerGame(players);
-	pg.deal();
-	for(auto p : pg.players){
-		std::cout << p.getHandValue() << " " << p.showCards().size() << std::endl;
-		for(auto c : p.showCards()){
+	PokerGame *pg = new PokerGame(players);
+	pg->deal();
+
+	for(auto p : pg->players){
+		std::cout << p->getHandValue() << std::endl;
+		for(auto c : p->showCards()){
 			std::cout << c.getFace() << "-" << c.getSuit() << " ";
 		}
 		std::cout << std::endl;
 	}
-	pg.showHands();
-	for(auto p : pg.players){
-		std::cout << p.getChipCount() << std::endl;
+	pg->showHands();
+	for(auto p : pg->players){
+		std::cout << p->getChipCount() << std::endl;
 	}
-	pg.newHand();
+	pg->newHand();
 
 	//second hand
-	pg.deal();
-	for(auto p : pg.players){
-		std::cout << p.getHandValue() << std::endl;
-		for(auto c : p.showCards()){
+	pg->deal();
+	for(auto p : pg->players){
+		std::cout << p->getHandValue() << std::endl;
+		for(auto c : p->showCards()){
 			std::cout << c.getFace() << "-" << c.getSuit() << " ";
 		}
 		std::cout << std::endl;
 	}
-	pg.showHands();
-	for(auto p : pg.players){
-		std::cout << p.getChipCount() << std::endl;
+	pg->showHands();
+	for(auto p : pg->players){
+		std::cout << p->getChipCount() << std::endl;
 	}
 }
 

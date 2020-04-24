@@ -21,6 +21,12 @@ void Player::newHand(){
 	handValid = false;
 }
 
+void Player::addChips(int c)
+{
+	chipCount += c;
+	emit chipsChanged(chipCount);
+}
+
 double Player::getHandValue()
 {
 	if(handValid){
@@ -34,6 +40,7 @@ int Player::bet(int chips)
 {
 	if(chipCount >= chips){
 		chipCount -= chips;
+		emit chipsChanged(chipCount);
 	}
 	return chips;
 }
