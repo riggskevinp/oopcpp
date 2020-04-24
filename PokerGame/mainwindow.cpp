@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 			QLabel *chipsLabel = new QLabel(this);
 			chipsLabel->setNum(pg->players.at(i)->getChipCount());
 			QSpinBox *sb = new QSpinBox(this);
+			sb->setMaximum(1000);
 			connect(sb, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainWindow::betChanged);
 			QLabel *handLabel = new QLabel(this);
 			handLabel->setText(QString("Empty"));
@@ -77,6 +78,7 @@ MainWindow::~MainWindow()
 void MainWindow::deal()
 {
 	this->ui->dealButton->setDisabled(true);
+	currentBet = 0;
 	pg->deal();
 	for(int i = 0; i < humanPlayers.size(); i++){
 		std::get<0>(humanPlayers.at(i))->setNum(pg->players.at(i)->getChipCount());
