@@ -29,7 +29,7 @@ public:
 	const std::vector<Card>& showCards(){return cards;}
 
 signals:
-	void chipsChanged(int chips);
+	void chipsChanged(int floor);
 
 private:
 	PokerHand hand = PokerHand();

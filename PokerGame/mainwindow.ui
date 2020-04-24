@@ -34,60 +34,7 @@
        <string>GroupBox</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="3">
-        <widget class="QLabel" name="potLabel">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Number of Humans</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_6">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Amount to bet</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QSpinBox" name="numberOfPlayersSpinBox">
-         <property name="minimum">
-          <number>2</number>
-         </property>
-         <property name="maximum">
-          <number>7</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="spinBox"/>
-       </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
@@ -100,43 +47,8 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Bet</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="betLabel">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="dealButton">
-         <property name="text">
-          <string>Deal</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLabel" name="label_4">
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_6">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -144,27 +56,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Current Bet:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Pot:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Fold</string>
+          <string>Amount to bet</string>
          </property>
         </widget>
        </item>
@@ -188,17 +80,26 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QLabel" name="computerMoveLabel">
-         <property name="text">
-          <string>TextLabel</string>
+       <item row="1" column="0">
+        <widget class="QSpinBox" name="numberOfPlayersSpinBox">
+         <property name="minimum">
+          <number>2</number>
+         </property>
+         <property name="maximum">
+          <number>7</number>
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="showCardsButton">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>Show Cards</string>
+          <string>Number of Humans</string>
          </property>
         </widget>
        </item>
@@ -215,7 +116,20 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="4">
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Pot:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
@@ -228,15 +142,22 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="4">
-        <widget class="QLabel" name="label_11">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="dealButton">
          <property name="text">
-          <string>TextLabel</string>
+          <string>Deal</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="4">
-        <widget class="QLabel" name="label_12">
+       <item row="2" column="1">
+        <widget class="QPushButton" name="showCardsButton">
+         <property name="text">
+          <string>Show Cards</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="potLabel">
          <property name="text">
           <string>TextLabel</string>
          </property>
